@@ -1,0 +1,9 @@
+{
+	"name": "Laravel TOSS Task",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "app",
+	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+	"features": {
+		"ghcr.io/devcontainers/features/node:1": {}
+	}
+}
