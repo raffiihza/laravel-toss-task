@@ -5,26 +5,34 @@ use App\Http\Controllers\GradeController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\TeacherAttendanceController;
 use Illuminate\Support\Facades\Route;
 
+// Untuk semua pengguna, bahkan tanpa login
 Route::get('/', function () {
     return view('welcome');
 });
 
+// Untuk yang sudah login
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
 
+    // Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/attendance', [TeacherAttendanceController::class, 'index'])->name('attendance.index');
 });
 
+// Untuk guru saja
+Route::get('/attendance/create', [TeacherAttendanceController::class, 'create'])->name('attendance.create');
+Route::post('/attendance', [TeacherAttendanceController::class, 'store'])->name('attendance.store');
+
+// Untuk admin saja
 Route::middleware(['auth','admin'])->group(function () {
-    Route::get('/teachers', function () {
-        return view('teachers.index');
-    })->name('users');
     
     // Routes untuk Grade (Kelas)
     Route::get('/grades', [GradeController::class, 'index'])->name('grades.index'); // Tampilkan semua kelas
