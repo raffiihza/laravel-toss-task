@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TeacherController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -21,8 +22,8 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth','admin'])->group(function () {
-    Route::get('/users', function () {
-        return view('admins.users');
+    Route::get('/teachers', function () {
+        return view('teachers.index');
     })->name('users');
     
     // Routes untuk Grade (Kelas)
@@ -48,6 +49,15 @@ Route::middleware(['auth','admin'])->group(function () {
     Route::get('/students/{id}/edit', [StudentController::class, 'edit'])->name('students.edit');
     Route::put('/students/{id}', [StudentController::class, 'update'])->name('students.update');
     Route::delete('/students/{id}', [StudentController::class, 'destroy'])->name('students.destroy');
+
+    // Route untuk Teacher (Guru)
+    Route::get('/teachers', [TeacherController::class, 'index'])->name('teachers.index');
+    Route::get('/teachers/create', [TeacherController::class, 'create'])->name('teachers.create');
+    Route::post('/teachers', [TeacherController::class, 'store'])->name('teachers.store');
+    Route::get('/teachers/{id}/edit', [TeacherController::class, 'edit'])->name('teachers.edit');
+    Route::put('/teachers/{id}', [TeacherController::class, 'update'])->name('teachers.update');
+    Route::delete('/teachers/{id}', [TeacherController::class, 'destroy'])->name('teachers.destroy');
+    Route::post('/teachers/{id}/reset-password', [TeacherController::class, 'resetPassword'])->name('teachers.reset-password');
 });
 
 require __DIR__.'/auth.php';

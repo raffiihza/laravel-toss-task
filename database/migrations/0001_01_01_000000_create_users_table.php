@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('nip')->unique();
             $table->string('name');
             $table->enum('gender', ['Laki-laki', 'Perempuan']);
+            $table->string('phone')->nullable();
             $table->enum('role', ['Admin', 'Guru'])->default('Guru');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
