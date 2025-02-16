@@ -1,10 +1,10 @@
 @extends('layouts.base')
 
-@section('title', 'Daftar Jadwal')
+@section('title', 'Daftar Jadwal Pelajaran')
 
 @section('content')
 <div class="bg-white p-6 rounded-lg shadow-md">
-    <h1 class="text-2xl font-bold mb-4 text-gray-700">Daftar Jadwal</h1>
+    <h1 class="text-2xl font-bold mb-4 text-gray-700">Daftar Jadwal Pelajaran</h1>
 
     @if(session('success'))
         <div class="bg-green-100 text-green-700 p-3 rounded-lg mb-4">
@@ -13,7 +13,7 @@
     @endif
 
     <a href="{{ route('schedules.create') }}" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md mb-4 inline-block">
-        + Tambah Jadwal
+        + Tambah Jadwal Pelajaran
     </a>
 
     <div class="overflow-x-auto">

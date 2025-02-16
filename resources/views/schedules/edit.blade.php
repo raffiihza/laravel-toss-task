@@ -1,10 +1,10 @@
 @extends('layouts.base')
 
-@section('title', 'Edit Jadwal')
+@section('title', 'Edit Jadwal Pelajaran')
 
 @section('content')
 <div class="bg-white p-6 rounded-lg shadow-md">
-    <h1 class="text-2xl font-bold mb-4 text-gray-700">Edit Jadwal</h1>
+    <h1 class="text-2xl font-bold mb-4 text-gray-700">Edit Jadwal Pelajaran</h1>
 
     @if ($errors->any())
         <div class="bg-red-100 text-red-700 p-3 rounded-lg mb-4">
