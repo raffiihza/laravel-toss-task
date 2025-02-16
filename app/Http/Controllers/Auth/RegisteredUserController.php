@@ -35,6 +35,7 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'nip' => 'required|unique:users',
             'gender' => 'required|in:Laki-Laki,Perempuan',
+            'phone' => 'required',
         ]);
 
         $user = User::create([
@@ -42,6 +43,7 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'nip' => $request->nip,
             'gender' => $request->gender,
+            'phone' => $request->phone,
             'password' => Hash::make($request->password),
         ]);
 

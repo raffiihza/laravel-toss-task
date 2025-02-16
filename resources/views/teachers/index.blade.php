@@ -1,5 +1,9 @@
-<x-app-layout>
-    <x-slot name="header">
+@extends('layouts.base')
+@section('title', 'Presensi Guru')
+
+@section('content')
+
+<x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Users') }}
         </h2>
@@ -14,4 +18,4 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+@endsection

@@ -24,12 +24,12 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/attendance', [TeacherAttendanceController::class, 'index'])->name('attendance.index');
+    Route::get('/attendances/teachers', [TeacherAttendanceController::class, 'index'])->name('teacherattendances.index');
 });
 
 // Untuk guru saja
-Route::get('/attendance/create', [TeacherAttendanceController::class, 'create'])->name('attendance.create');
-Route::post('/attendance', [TeacherAttendanceController::class, 'store'])->name('attendance.store');
+Route::get('/attendances/teachers/create', [TeacherAttendanceController::class, 'create'])->name('teacherattendances.create');
+Route::post('/attendances/teachers', [TeacherAttendanceController::class, 'store'])->name('teacherattendances.store');
 
 // Untuk admin saja
 Route::middleware(['auth','admin'])->group(function () {
