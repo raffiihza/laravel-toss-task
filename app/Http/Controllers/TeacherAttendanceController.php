@@ -26,6 +26,11 @@ class TeacherAttendanceController extends Controller
             $attendances = TeacherAttendance::where('user_id', $user->id)->get();
         }
 
+        foreach ($attendances as $attendance) {
+            $attendance->formatted_date = \Carbon\Carbon::parse($attendance->created_at)
+                ->translatedFormat('l, d F Y H:i');
+        }
+
         return view('teacherattendances.index', compact('attendances'));
     }
 
@@ -34,7 +39,7 @@ class TeacherAttendanceController extends Controller
      */
     public function create()
     {
-        return view('attendance.create');
+        return view('teacherattendances.create');
     }
 
     /**
@@ -55,7 +60,7 @@ class TeacherAttendanceController extends Controller
             'proof' => $proofLink,
         ]);
 
-        return redirect()->route('attendance.index')->with('success', 'Presensi berhasil dikirim.');
+        return redirect()->route('teacherattendances.index')->with('success', 'Presensi berhasil dikirim.');
     }
 
     private function uploadToGoogleDrive($file)

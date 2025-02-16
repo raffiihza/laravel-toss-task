@@ -30,12 +30,12 @@
                 <tr class="border-b border-gray-200 hover:bg-gray-50">
                     <td class="border border-gray-300 px-4 py-3 text-center">{{ $index + 1 }}</td>
                     <td class="border border-gray-300 px-4 py-3">{{ $grade->name }}</td>
-                    <td class="border border-gray-300 px-4 py-3 flex space-x-2 justify-center">
-                        <a href="{{ route('grades.edit', $grade->id) }}" class="bg-red-600 text-white px-4 py-2 rounded">Edit</a>
+                    <td class="border border-gray-300 px-4 py-3 justify-center">
+                        <a href="{{ route('grades.edit', $grade->id) }}" class="bg-red-600 text-white px-2 py-1 rounded">Edit</a>
                         <form action="{{ route('grades.destroy', $grade->id) }}" method="POST" class="inline">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded"
+                            <button type="submit" class="bg-red-600 text-white px-2 py-1 rounded"
                                 onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
                         </form>
                     </td>

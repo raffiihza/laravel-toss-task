@@ -36,12 +36,12 @@
                     <td class="border border-gray-300 px-4 py-3">{{ $student->name }}</td>
                     <td class="border border-gray-300 px-4 py-3">{{ $student->gender }}</td>
                     <td class="border border-gray-300 px-4 py-3">{{ $student->grade->name }}</td>
-                    <td class="border border-gray-300 px-4 py-3 flex space-x-2 justify-center">
-                        <a href="{{ route('students.edit', $student->id) }}" class="bg-red-600 text-white px-4 py-2 rounded">Edit</a>
+                    <td class="border border-gray-300 px-4 py-3 justify-center">
+                        <a href="{{ route('students.edit', $student->id) }}" class="bg-red-600 text-white px-2 py-1 rounded">Edit</a>
                         <form action="{{ route('students.destroy', $student->id) }}" method="POST" class="inline">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded"
+                            <button type="submit" class="bg-red-600 text-white px-2 py-1 rounded"
                                 onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
                         </form>
                     </td>
