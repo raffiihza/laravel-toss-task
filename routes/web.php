@@ -6,6 +6,7 @@ use App\Http\Controllers\LessonController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\TeacherAttendanceController;
+use App\Http\Controllers\ScheduleController;
 use Illuminate\Support\Facades\Route;
 
 // Untuk semua pengguna, bahkan tanpa login
@@ -66,6 +67,13 @@ Route::middleware(['auth','admin'])->group(function () {
     Route::put('/teachers/{id}', [TeacherController::class, 'update'])->name('teachers.update');
     Route::delete('/teachers/{id}', [TeacherController::class, 'destroy'])->name('teachers.destroy');
     Route::post('/teachers/{id}/reset-password', [TeacherController::class, 'resetPassword'])->name('teachers.reset-password');
+
+    Route::get('/schedules', [ScheduleController::class, 'index'])->name('schedules.index'); // Menampilkan daftar jadwal
+    Route::get('/schedules/create', [ScheduleController::class, 'create'])->name('schedules.create'); // Form tambah jadwal
+    Route::post('/schedules', [ScheduleController::class, 'store'])->name('schedules.store'); // Proses simpan jadwal baru
+    Route::get('/schedules/{id}/edit', [ScheduleController::class, 'edit'])->name('schedules.edit'); // Form edit jadwal
+    Route::put('/schedules/{id}', [ScheduleController::class, 'update'])->name('schedules.update'); // Proses update jadwal
+    Route::delete('/schedules/{id}', [ScheduleController::class, 'destroy'])->name('schedules.destroy'); // Hapus jadwal
 });
 
 require __DIR__.'/auth.php';

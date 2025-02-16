@@ -18,6 +18,7 @@
                     <a href="{{ route('grades.index') }}" class="block py-2 px-6 hover:bg-red-700">Kelas</a>
                     <a href="{{ route('lessons.index') }}" class="block py-2 px-6 hover:bg-red-700">Mata Pelajaran</a>
                     <a href="{{ route('students.index') }}" class="block py-2 px-6 hover:bg-red-700">Siswa</a>
+                    <a href="{{ route('schedules.index') }}" class="block py-2 px-6 hover:bg-red-700">Jadwal</a>
                 </div>
             </div>
         @endif
