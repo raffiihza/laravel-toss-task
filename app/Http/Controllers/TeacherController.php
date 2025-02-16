@@ -24,6 +24,7 @@ class TeacherController extends Controller
         $request->validate([
             'nip' => 'required|unique:users',
             'name' => 'required',
+            'phone' => 'required',
             'gender' => 'required|in:Laki-Laki,Perempuan',
             'email' => 'required|email|unique:users',
         ]);
@@ -34,6 +35,7 @@ class TeacherController extends Controller
             'gender' => $request->gender,
             'email' => $request->email,
             'role' => 'Guru',
+            'phone' => 'required',
             'password' => Hash::make('sekolah123'), // Password default
         ]);
 
@@ -53,6 +55,7 @@ class TeacherController extends Controller
         $request->validate([
             'nip' => 'required|unique:users,nip,' . $id,
             'name' => 'required',
+            'phone' => 'required',
             'gender' => 'required|in:Laki-Laki,Perempuan',
             'email' => 'required|email|unique:users,email,' . $id,
         ]);
@@ -62,6 +65,7 @@ class TeacherController extends Controller
             'name' => $request->name,
             'gender' => $request->gender,
             'email' => $request->email,
+            'phone' => $request->phone,
         ]);
 
         return redirect()->route('teachers.index')->with('success', 'Akun guru berhasil diperbarui.');
