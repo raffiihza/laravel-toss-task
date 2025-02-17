@@ -45,6 +45,7 @@
         });
     });
 </script>
+
 @yield('scripts')
 
 </html>
