@@ -51,7 +51,7 @@
                 <td class="border border-gray-300 px-4 py-3">{{ $schedule->start_time }} - {{ $schedule->end_time }}</td>
                 <td class="border border-gray-300 px-4 py-3">
                     @if(auth()->user()->role === 'Admin')
-                        <a href="{{ route('studentattendances.view', ['schedule' => $schedule->id, 'date' => $selectedDate]) }}" class="bg-red-600 text-white px-2 py-1 rounded">Lihat</a>
+                        <a href="{{ route('studentattendances.show', ['schedule' => $schedule->id, 'date' => $selectedDate]) }}" class="bg-red-600 text-white px-2 py-1 rounded">Lihat</a>
                     @else
                         <a href="{{ route('studentattendances.edit', ['schedule' => $schedule->id, 'date' => $selectedDate]) }}" class="bg-red-600 text-white px-2 py-1 rounded">Edit</a>
                     @endif

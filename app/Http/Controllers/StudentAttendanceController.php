@@ -25,7 +25,7 @@ class StudentAttendanceController extends Controller
         // Jika admin, lihat semua jadwal, jika guru, lihat jadwal yang diajarnya
         $query = Schedule::with('lesson', 'grade', 'user')
             ->whereHas('grade.students') // Hanya kelas yang memiliki siswa
-            ->whereIn('day', [Carbon::parse($selectedDate)->isoFormat('dddd')]); // Filter berdasarkan hari
+            ->where('day', Carbon::parse($selectedDate)->isoFormat('dddd')); // Filter berdasarkan hari
 
         if ($user->role === 'Guru') {
             $query->where('user_id', $user->id);
@@ -37,7 +37,7 @@ class StudentAttendanceController extends Controller
     }
 
     /**
-     * Halaman kelola presensi oleh guru.
+     * Halaman edit presensi oleh guru.
      */
     public function edit($scheduleId, Request $request)
     {
@@ -52,7 +52,7 @@ class StudentAttendanceController extends Controller
         // Cek apakah agenda sudah ada atau buat baru
         $agenda = Agenda::firstOrCreate([
             'schedule_id' => $schedule->id,
-            'created_at' => Carbon::parse($selectedDate)->startOfDay(),
+            'date' => Carbon::parse($selectedDate)->toDateString(),
         ], ['content' => '']);
 
         // Ambil semua siswa dari kelas ini
@@ -93,25 +93,27 @@ class StudentAttendanceController extends Controller
             );
         }
 
-        return redirect()->route('studentattendances.index')->with('success', 'Presensi berhasil disimpan.');
+        return redirect()->route('studentattendances.index', ['date' => $agenda->date])
+            ->with('success', 'Presensi berhasil disimpan.');
     }
 
     /**
      * Admin hanya bisa melihat presensi, tidak bisa mengedit.
      */
-    public function view($scheduleId, Request $request)
+    public function show($scheduleId, Request $request)
     {
         $selectedDate = $request->input('date', Carbon::today()->toDateString());
         $schedule = Schedule::with('lesson', 'grade.students')->findOrFail($scheduleId);
 
         // Pastikan hanya admin yang bisa melihat
         if (Auth::user()->role !== 'Admin') {
-            return redirect()->route('studentattendances.index')->with('error', 'Anda tidak memiliki akses.');
+            return redirect()->route('studentattendances.index', ['date' => $selectedDate])
+                ->with('error', 'Anda tidak berhak mengelola presensi ini.');
         }
 
         // Cek apakah agenda sudah ada atau tidak
         $agenda = Agenda::where('schedule_id', $schedule->id)
-            ->whereDate('created_at', Carbon::parse($selectedDate)->startOfDay())
+            ->whereDate('date', Carbon::parse($selectedDate)->toDateString())
             ->first();
 
         // Ambil siswa dari kelas ini
@@ -120,6 +122,6 @@ class StudentAttendanceController extends Controller
         // Ambil data presensi
         $attendances = $agenda ? StudentAttendance::where('agenda_id', $agenda->id)->get()->keyBy('student_id') : [];
 
-        return view('studentattendances.view', compact('schedule', 'agenda', 'students', 'attendances', 'selectedDate'));
+        return view('studentattendances.show', compact('schedule', 'agenda', 'students', 'attendances', 'selectedDate'));
     }
 }

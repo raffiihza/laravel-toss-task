@@ -33,7 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/attendances/students', [StudentAttendanceController::class, 'index'])->name('studentattendances.index');
     Route::get('/attendances/students/edit/{schedule}', [StudentAttendanceController::class, 'edit'])->name('studentattendances.edit');
     Route::post('/attendances/students/store/{agenda}', [StudentAttendanceController::class, 'store'])->name('studentattendances.store');
-    Route::get('/attendances/students/view/{schedule}', [StudentAttendanceController::class, 'view'])->name('studentattendances.view');
+    Route::get('/attendances/students/show/{schedule}', [StudentAttendanceController::class, 'show'])->name('studentattendances.show');
 });
 
 // Untuk guru saja
