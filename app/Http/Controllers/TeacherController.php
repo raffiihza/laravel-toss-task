@@ -25,7 +25,7 @@ class TeacherController extends Controller
             'nip' => 'required|unique:users',
             'name' => 'required',
             'phone' => 'required',
-            'gender' => 'required|in:Laki-Laki,Perempuan',
+            'gender' => 'required|in:Laki-laki,Perempuan',
             'email' => 'required|email|unique:users',
         ]);
 
