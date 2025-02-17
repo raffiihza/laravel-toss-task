@@ -45,7 +45,7 @@ class StudentAttendanceController extends Controller
         $schedule = Schedule::with('lesson', 'grade.students')->findOrFail($scheduleId);
 
         // Pastikan hanya guru yang mengajar jadwal ini yang bisa mengelola
-        if (Auth::user()->role !== 'Admin' && Auth::id() !== $schedule->user_id) {
+        if (Auth::id() !== $schedule->user_id) {
             return redirect()->route('studentattendances.index')->with('error', 'Anda tidak berhak mengelola presensi ini.');
         }
 
@@ -78,7 +78,7 @@ class StudentAttendanceController extends Controller
         $agenda = Agenda::findOrFail($agendaId);
 
         // Pastikan hanya guru yang dapat mengedit agenda ini
-        if (Auth::user()->role !== 'Admin' && Auth::id() !== $agenda->schedule->user_id) {
+        if (Auth::id() !== $agenda->schedule->user_id) {
             return redirect()->route('studentattendances.index')->with('error', 'Anda tidak berhak mengelola presensi ini.');
         }
 
