@@ -1,9 +1,10 @@
 {
 	frankenphp
+    admin off
 }
 
 # The domain name of your server
-* {
+:{$PORT} {
 	# Set the webroot to the public/ directory
 	root * public/
 	# Enable compression (optional)
