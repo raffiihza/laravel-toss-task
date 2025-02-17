@@ -4,8 +4,12 @@
 
 @section('content')
 <div class="bg-white p-6 rounded-lg shadow-md">
-    <h1 class="text-2xl font-bold mb-4 text-gray-700">Kelola Presensi - {{ $schedule->lesson->name }} ({{ $schedule->grade->name }})</h1>
-    <p><strong>Tanggal:</strong> {{ \Carbon\Carbon::parse($selectedDate)->isoFormat('dddd, D MMMM YYYY') }}</p>
+    <h1 class="text-2xl font-bold mb-4 text-gray-700">Edit Presensi - {{ $schedule->lesson->name }} ({{ $schedule->grade->name }})</h1>
+    <p><strong>Hari, Tanggal:</strong> {{ \Carbon\Carbon::parse($selectedDate)->isoFormat('dddd, D MMMM YYYY') }}</p>
+    <p><strong>Mata Pelajaran:</strong> {{ $schedule->lesson->name }}</p>
+    <p><strong>Kelas:</strong> {{ $schedule->grade->name }}</p>
+    <p><strong>Guru:</strong> {{ $schedule->user->name }}</p>
+    <p><strong>Waktu:</strong> {{ $schedule->start_time }} - {{ $schedule->end_time }}</p>
 
     <!-- Form Agenda -->
     <form method="POST" action="{{ route('studentattendances.store', ['agenda' => $agenda->id]) }}">
