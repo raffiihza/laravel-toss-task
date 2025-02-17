@@ -4,7 +4,7 @@
     <nav class="flex-1">
     <a href="{{ route('dashboard') }}" class="block py-2 px-4 hover:bg-red-700 rounded">Dashboard</a>
     <a href="{{ route('teacherattendances.index') }}" class="mt-2 block py-2 px-4 hover:bg-red-700 rounded">Absensi Guru</a>
-    <a href="{{ route('teacherattendances.index') }}" class="mt-2 block py-2 px-4 hover:bg-red-700 rounded">Absensi Siswa</a>
+    <a href="{{ route('studentattendances.index') }}" class="mt-2 block py-2 px-4 hover:bg-red-700 rounded">Absensi Siswa</a>
 
         <!-- Dropdown Admin Menu -->
         @if(Auth::user()->role === 'Admin')

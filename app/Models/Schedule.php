@@ -35,4 +35,10 @@ class Schedule extends Model
     {
         return $this->belongsTo(User::class, 'user_id')->where('role', 'Guru');
     }
+
+    // Relasi ke User (Semua)
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

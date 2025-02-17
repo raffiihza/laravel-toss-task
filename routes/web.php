@@ -7,6 +7,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\TeacherAttendanceController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\StudentAttendanceController;
 use Illuminate\Support\Facades\Route;
 
 // Untuk semua pengguna, bahkan tanpa login
@@ -26,11 +27,19 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/attendances/teachers', [TeacherAttendanceController::class, 'index'])->name('teacherattendances.index');
+    Route::get('/attendances/teachers/create', [TeacherAttendanceController::class, 'create'])->name('teacherattendances.create');
+    Route::post('/attendances/teachers', [TeacherAttendanceController::class, 'store'])->name('teacherattendances.store');
+
+    Route::get('/attendances/students', [StudentAttendanceController::class, 'index'])->name('studentattendances.index');
+    Route::get('/attendances/students/edit/{schedule}', [StudentAttendanceController::class, 'edit'])->name('studentattendances.edit');
+    Route::post('/attendances/students/store/{agenda}', [StudentAttendanceController::class, 'store'])->name('studentattendances.store');
+    Route::get('/attendances/students/view/{schedule}', [StudentAttendanceController::class, 'view'])->name('studentattendances.view');
 });
 
 // Untuk guru saja
-Route::get('/attendances/teachers/create', [TeacherAttendanceController::class, 'create'])->name('teacherattendances.create');
-Route::post('/attendances/teachers', [TeacherAttendanceController::class, 'store'])->name('teacherattendances.store');
+Route::middleware(['auth','guru'])->group(function () {
+    
+});
 
 // Untuk admin saja
 Route::middleware(['auth','admin'])->group(function () {

@@ -15,7 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('schedule_id')->constrained()->onDelete('cascade');
             $table->text('content');
+            $table->date('date');
             $table->timestamps();
+
+            // Kombinasi schedule_id dan date harus unik
+            $table->unique(['schedule_id', 'date']);
         });
     }
 

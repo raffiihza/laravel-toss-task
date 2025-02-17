@@ -9,7 +9,7 @@ class Agenda extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['schedule_id', 'content'];
+    protected $fillable = ['schedule_id', 'content', 'date'];
 
     /**
      * Relasi ke Schedule.
@@ -17,5 +17,10 @@ class Agenda extends Model
     public function schedule()
     {
         return $this->belongsTo(Schedule::class);
+    }
+
+    public function attendances()
+    {
+        return $this->hasMany(StudentAttendance::class);
     }
 }
