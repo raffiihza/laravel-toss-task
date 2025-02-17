@@ -1,13 +1,15 @@
-FROM raffiihza/docker-laravel
+FROM php:8.3
 
-WORKDIR /var/www/html
+WORKDIR /app
 COPY . .
 
-ENV APP_ENV=production
-
-RUN composer install && npm install && npm run build
-RUN mkdir -p /var/www/html/storage /var/www/html/cache && \
-    chmod -R 777 /var/www/html/storage /var/www/html/bootstrap/cache
+RUN curl -sS https://getcomposer.org/installer -o composer-setup.php && \
+    php composer-setup.php --install-dir=/usr/local/bin --filename=composer && \
+    composer install && \
+    curl https://frankenphp.dev/install.sh | sh && \
+    curl https://i.jpillora.com/caddy && \
+    mkdir -p /app/storage /app/cache && \
+    chmod -R 777 /app/storage /app/cache
 
 EXPOSE 80
-CMD ["apache2ctl", "-D", "FOREGROUND"]
+CMD ["./frankenphp", "run"]
