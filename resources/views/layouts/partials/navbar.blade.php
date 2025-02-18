@@ -16,16 +16,24 @@
         </div>
     </div>
 </div>
-@section("scripts")
+@push('scripts')
 <script>
+// Jalankan setelah semua content dan script lain dimuat
 document.addEventListener('DOMContentLoaded', function() {
+    // Pastikan elemen-elemen dropdown ada
     const dropdownButton = document.getElementById('dropdown-button');
     const dropdownMenu = document.getElementById('dropdown-menu');
     const dropdownContainer = document.getElementById('dropdown-container');
     
+    if (!dropdownButton || !dropdownMenu || !dropdownContainer) {
+        console.warn('Elemen dropdown tidak ditemukan');
+        return;
+    }
+    
     // Toggle dropdown when button is clicked
     dropdownButton.addEventListener('click', function(event) {
         event.stopPropagation(); // Prevent this click from being detected by the document listener
+        event.preventDefault(); // Prevent default action
         dropdownMenu.classList.toggle('hidden');
     });
     
@@ -37,4 +45,4 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
-@endsection
+@endpush
