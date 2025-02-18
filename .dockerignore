@@ -19,9 +19,6 @@ vendor/**/Tests*
 **.sass-cache
 *.env*
 
-*.config.js
-?ulpfile.js
-?untfile.js
 phpunit.xml
 phpspec.yml
 
