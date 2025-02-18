@@ -1,4 +1,4 @@
-<div class="w-64 bg-red-600 text-white flex flex-col h-screen overflow-y-auto p-6">
+<div class="w-64 bg-red-600 text-white flex flex-col h-screen sticky top-0 overflow-y-auto p-6">
     <h2 class="text-2xl font-bold mb-6">EduTend</h2>
 
     <nav class="flex-1">
