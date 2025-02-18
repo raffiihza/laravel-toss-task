@@ -47,7 +47,7 @@
         <div class="mb-4">
             <x-input-label for="gender" :value="__('Gender')" />
             <select id="gender" name="gender" class="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400" required>
-                <option value="Laki-laki" {{ $teachers->gender == 'Laki-Laki' ? 'selected' : '' }}>Laki-laki</option>
+                <option value="Laki-laki" {{ $teachers->gender == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
                 <option value="Perempuan" {{ $teachers->gender == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
             </select>
             <x-input-error :messages="$errors->get('gender')" class="mt-2" />

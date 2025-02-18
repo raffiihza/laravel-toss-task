@@ -35,7 +35,7 @@ class TeacherController extends Controller
             'gender' => $request->gender,
             'email' => $request->email,
             'role' => 'Guru',
-            'phone' => 'required',
+            'phone' => $request->phone,
             'password' => Hash::make('sekolah123'), // Password default
         ]);
 
@@ -56,7 +56,7 @@ class TeacherController extends Controller
             'nip' => 'required|unique:users,nip,' . $id,
             'name' => 'required',
             'phone' => 'required',
-            'gender' => 'required|in:Laki-Laki,Perempuan',
+            'gender' => 'required|in:Laki-laki,Perempuan',
             'email' => 'required|email|unique:users,email,' . $id,
         ]);
 
