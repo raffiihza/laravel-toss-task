@@ -16,6 +16,7 @@
         </div>
     </div>
 </div>
+
 @push('scripts')
 <script>
 // Jalankan setelah semua content dan script lain dimuat
@@ -30,14 +31,14 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
     
-    // Toggle dropdown when button is clicked
+    // Ubah tampilan dropdown ketika diklik
     dropdownButton.addEventListener('click', function(event) {
-        event.stopPropagation(); // Prevent this click from being detected by the document listener
-        event.preventDefault(); // Prevent default action
+        event.stopPropagation(); // Menghindari klik dideteksi oleh document listener
+        event.preventDefault(); // Menghindari action default
         dropdownMenu.classList.toggle('hidden');
     });
     
-    // Close dropdown when clicking outside
+    // Tutup dropdown ketika klik di luar elemen
     document.addEventListener('click', function(event) {
         if (!dropdownContainer.contains(event.target) && !dropdownMenu.classList.contains('hidden')) {
             dropdownMenu.classList.add('hidden');

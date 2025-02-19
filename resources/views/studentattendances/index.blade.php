@@ -26,6 +26,7 @@
     </form>
 
     <h2 class="font-bold mb-4 text-gray-700">
+        <!-- Format kembali tanggal agar mudah dibaca -->
         {{ \Carbon\Carbon::parse($selectedDate)->isoFormat('dddd, D MMMM YYYY') }}
     </h2>
 
@@ -50,6 +51,7 @@
                 <td class="border border-gray-300 px-4 py-3">{{ $schedule->user->name }}</td>
                 <td class="border border-gray-300 px-4 py-3">{{ $schedule->start_time }} - {{ $schedule->end_time }}</td>
                 <td class="border border-gray-300 px-4 py-3">
+                    <!-- Admin hanya bisa melihat, guru yang terkait bisa mengedit -->
                     @if(auth()->user()->role === 'Admin')
                         <a href="{{ route('studentattendances.show', ['schedule' => $schedule->id, 'date' => $selectedDate]) }}" class="bg-red-600 text-white px-2 py-1 rounded">Lihat</a>
                     @else

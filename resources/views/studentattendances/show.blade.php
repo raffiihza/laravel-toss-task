@@ -4,6 +4,7 @@
 
 @section('content')
 <div class="bg-white p-6 rounded-lg shadow-md">
+    <!-- Ambil data agar mudah dilihat -->
     <h1 class="text-2xl font-bold mb-4 text-gray-700">Lihat Presensi - {{ $schedule->lesson->name }} ({{ $schedule->grade->name }})</h1>
     <p><strong>Hari, Tanggal:</strong> {{ \Carbon\Carbon::parse($selectedDate)->isoFormat('dddd, D MMMM YYYY') }}</p>
     <p><strong>Mata Pelajaran:</strong> {{ $schedule->lesson->name }}</p>
@@ -13,6 +14,7 @@
 
     <div class="mt-4 mb-4">
     <x-input-label for="agenda_content" :value="__('Agenda')" />
+        <!-- Tampikan agenda, jika kosong, tuliskan belum ada agenda -->
         <textarea id="agenda_content" name="agenda_content" rows="3" class="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400" readonly>{{ $agenda->content ?? 'Belum ada agenda.' }}</textarea>
     </div>
 
@@ -34,6 +36,7 @@
                     <td class="border border-gray-300 px-4 py-3 text-center">{{ $index + 1 }}</td>
                     <td class="border border-gray-300 px-4 py-3">{{ $student->nisn }}</td>
                     <td class="border border-gray-300 px-4 py-3">{{ $student->name }}</td>
+                    <!-- Cek apakah siswa sudah diabsen, jika ada, tampilkan -->
                     <td class="border border-gray-300 px-4 py-3">{{ $attendances[$student->id]->status ?? '-' }}</td>
                 </tr>
                 @endforeach

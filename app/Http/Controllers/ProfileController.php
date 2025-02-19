@@ -12,7 +12,7 @@ use Illuminate\View\View;
 class ProfileController extends Controller
 {
     /**
-     * Display the user's profile form.
+     * Menampilkan halaman edit profil
      */
     public function edit(Request $request): View
     {
@@ -22,10 +22,11 @@ class ProfileController extends Controller
     }
 
     /**
-     * Update the user's profile information.
+     * Menyimpan edit profil nama, email, gender, dan telepon
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
+        // Tambahan validasi di luar bawaan Breeze
         $request->validate([
             'phone' => 'required',
             'gender' => 'required|in:Laki-laki,Perempuan',
@@ -42,7 +43,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * Delete the user's account.
+     * Menghapus akun
      */
     public function destroy(Request $request): RedirectResponse
     {

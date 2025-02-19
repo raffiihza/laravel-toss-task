@@ -14,18 +14,21 @@ use Google_Service_Drive_Permission;
 class TeacherAttendanceController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Menampilkan halaman index presensi guru
      */
     public function index()
     {
         $user = Auth::user();
 
+        // Jika admin, tampilkan semua presensi dari semua guru
+        // Jika guru, tampilkan semua presensi dari guru tersebut
         if ($user->role === 'Admin') {
             $attendances = TeacherAttendance::with('user')->get();
         } else {
             $attendances = TeacherAttendance::where('user_id', $user->id)->get();
         }
 
+        // Mengubah format tanggal pada halaman agar mudah dibaca
         foreach ($attendances as $attendance) {
             $attendance->formatted_date = \Carbon\Carbon::parse($attendance->created_at)
                 ->translatedFormat('l, d F Y H:i');
@@ -35,7 +38,7 @@ class TeacherAttendanceController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Menampilkan halaman buat presensi guru
      */
     public function create()
     {
@@ -43,15 +46,16 @@ class TeacherAttendanceController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Menyimpan tambah presensi guru
      */
     public function store(Request $request)
     {
         $request->validate([
             'status' => 'required|in:Hadir,Izin,Sakit,Cuti',
-            'proof' => 'required|image|max:2048',
+            'proof' => 'required|image|max:2048', // Pastikan di bawah 2MB dan berformat gambar
         ]);
 
+        // Panggil fungsi upload ke Google Drive
         $proofLink = $this->uploadToGoogleDrive($request->file('proof'));
 
         TeacherAttendance::create([
@@ -63,8 +67,12 @@ class TeacherAttendanceController extends Controller
         return redirect()->route('teacherattendances.index')->with('success', 'Presensi berhasil dikirim.');
     }
 
+    /**
+     * Fungsi upload ke Google Drive
+     */
     private function uploadToGoogleDrive($file)
     {
+        // Ambil konfigurasi dari env
         $client = new Google_Client();
         $client->setClientId(config('services.google.client_id'));
         $client->setClientSecret(config('services.google.client_secret'));
@@ -72,13 +80,16 @@ class TeacherAttendanceController extends Controller
 
         $service = new Google_Service_Drive($client);
 
+        // Sesuaikan metadata dari nama file dan folder id tujuan
         $fileMetadata = new Google_Service_Drive_DriveFile([
             'name' => $file->getClientOriginalName(),
             'parents' => [config('services.google.folder_id')]
         ]);
 
+        // Upload file ke server Laravel dulu dan ambil path file dalam server
         $content = file_get_contents($file->getRealPath());
 
+        // Upload file ke Google Drive
         $driveFile = $service->files->create($fileMetadata, [
             'data' => $content,
             'mimeType' => $file->getMimeType(),
@@ -86,46 +97,17 @@ class TeacherAttendanceController extends Controller
             'fields' => 'id',
         ]);
 
+        // Ambil file id untuk dimasukkan ke database
         $fileId = $driveFile->id;
 
-        // Set file to public
+        // Ubah permission file menjadi publik
         $service->permissions->create($fileId, new \Google_Service_Drive_Permission([
             'type' => 'anyone',
             'role' => 'reader',
         ]));
 
+        // Jadikan link file di Google Drive sebagai output fungsi
         return "https://drive.google.com/file/d/{$fileId}/view";
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(TeacherAttendance $teacherAttendance)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(TeacherAttendance $teacherAttendance)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, TeacherAttendance $teacherAttendance)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(TeacherAttendance $teacherAttendance)
-    {
-        //
-    }
 }

@@ -15,11 +15,12 @@ use Carbon\Carbon;
 class StudentAttendanceController extends Controller
 {
     /**
-     * Tampilkan daftar jadwal berdasarkan tanggal yang dipilih.
+     * Menampilkan halaman index presensi siswa berdasarkan tanggal yang dipilih
      */
     public function index(Request $request)
     {
         $user = Auth::user();
+        // Input tanggal pada variabel date, jika kosong maka ambil hari ini
         $selectedDate = $request->input('date', Carbon::today()->toDateString());
 
         // Jika admin, lihat semua jadwal, jika guru, lihat jadwal yang diajarnya
@@ -27,6 +28,7 @@ class StudentAttendanceController extends Controller
             ->whereHas('grade.students') // Hanya kelas yang memiliki siswa
             ->where('day', Carbon::parse($selectedDate)->isoFormat('dddd')); // Filter berdasarkan hari
 
+        // Jika guru, filter lagi sesuai yang dimiliki guru
         if ($user->role === 'Guru') {
             $query->where('user_id', $user->id);
         }
@@ -37,11 +39,13 @@ class StudentAttendanceController extends Controller
     }
 
     /**
-     * Halaman edit presensi oleh guru.
+     * Menampilkan halaman edit presensi oleh guru
      */
     public function edit($scheduleId, Request $request)
     {
+        // Memastikan variabel date pada URL tidak kosong
         $selectedDate = $request->input('date', Carbon::today()->toDateString());
+        // Ambil mata pelajaran dan murid sesuai kelas yang terkait dengan jadwal pelajaran
         $schedule = Schedule::with('lesson', 'grade.students')->findOrFail($scheduleId);
 
         // Pastikan hanya guru yang mengajar jadwal ini yang bisa mengelola
@@ -50,29 +54,30 @@ class StudentAttendanceController extends Controller
         }
 
         // Cek apakah agenda sudah ada atau buat baru
+        // Buat baru diperlukan untuk menghindari error
         $agenda = Agenda::firstOrCreate([
             'schedule_id' => $schedule->id,
             'date' => Carbon::parse($selectedDate)->toDateString(),
         ], ['content' => '']);
 
-        // Ambil semua siswa dari kelas ini
+        // Ambil semua siswa dari jadwal pelajaran dan kelas ini
         $students = $schedule->grade->students;
 
-        // Ambil data presensi yang sudah ada
+        // Ambil data presensi yang sudah ada, jika kosong tidak masalah
         $attendances = StudentAttendance::where('agenda_id', $agenda->id)->get()->keyBy('student_id');
 
         return view('studentattendances.edit', compact('schedule', 'agenda', 'students', 'attendances', 'selectedDate'));
     }
 
     /**
-     * Simpan atau perbarui presensi siswa.
+     * Menyimpan buat dan presensi siswa
      */
     public function store(Request $request, $agendaId)
     {
         $request->validate([
             'agenda_content' => 'required|string',
-            'attendance' => 'required|array',
-            'attendance.*' => 'in:Hadir,Izin,Sakit,Alfa',
+            'attendance' => 'required|array', // Pastikan dalam bentuk array
+            'attendance.*' => 'in:Hadir,Izin,Sakit,Alfa', // Pastikan data dalam array sesuai
         ]);
 
         $agenda = Agenda::findOrFail($agendaId);
@@ -85,7 +90,7 @@ class StudentAttendanceController extends Controller
         // Perbarui isi agenda
         $agenda->update(['content' => $request->agenda_content]);
 
-        // Simpan data presensi
+        // Simpan data presensi setiap siswa
         foreach ($request->attendance as $studentId => $status) {
             StudentAttendance::updateOrCreate(
                 ['agenda_id' => $agenda->id, 'student_id' => $studentId],
@@ -98,7 +103,8 @@ class StudentAttendanceController extends Controller
     }
 
     /**
-     * Admin hanya bisa melihat presensi, tidak bisa mengedit.
+     * Menampilkan halaman lihat presensi oleh admin
+     * Admin hanya bisa melihat presensi, tidak bisa mengedit
      */
     public function show($scheduleId, Request $request)
     {
@@ -108,7 +114,7 @@ class StudentAttendanceController extends Controller
         // Pastikan hanya admin yang bisa melihat
         if (Auth::user()->role !== 'Admin') {
             return redirect()->route('studentattendances.index', ['date' => $selectedDate])
-                ->with('error', 'Anda tidak berhak mengelola presensi ini.');
+                ->with('error', 'Anda tidak berhak melihat presensi ini.');
         }
 
         // Cek apakah agenda sudah ada atau tidak
@@ -116,7 +122,7 @@ class StudentAttendanceController extends Controller
             ->whereDate('date', Carbon::parse($selectedDate)->toDateString())
             ->first();
 
-        // Ambil siswa dari kelas ini
+        // Ambil siswa dari jadwal pelajaran dan kelas ini
         $students = $schedule->grade->students;
 
         // Ambil data presensi

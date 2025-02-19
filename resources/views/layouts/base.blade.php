@@ -28,6 +28,7 @@
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.tailwindcss.min.css">
 
+<!-- Pengaturan DataTables -->
 <script>
     $(document).ready(function () {
         $('#indexTable').DataTable({
@@ -46,8 +47,10 @@
     });
 </script>
 
+<!-- Data script dengan section -->
 @yield('scripts')
 
+<!-- Data script dengan push, mengurangi konflik -->
 @stack('scripts')
 
 </html>

@@ -18,7 +18,7 @@ class MustAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        //bisa melewati middleware jika role = Admin
+        // Bisa melewati middleware jika role = Admin
         if (!Auth::check()) {
             abort(404);
         } elseif (Auth::user()->role == 'Admin') {

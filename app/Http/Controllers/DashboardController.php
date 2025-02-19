@@ -14,6 +14,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        // Ambil semua data user (admin dan guru)
         $user = Auth::user();
 
         // Jumlah total

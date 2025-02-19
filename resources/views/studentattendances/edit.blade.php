@@ -4,6 +4,7 @@
 
 @section('content')
 <div class="bg-white p-6 rounded-lg shadow-md">
+    <!-- Ambil data agar mudah dilihat -->
     <h1 class="text-2xl font-bold mb-4 text-gray-700">Edit Presensi - {{ $schedule->lesson->name }} ({{ $schedule->grade->name }})</h1>
     <p><strong>Hari, Tanggal:</strong> {{ \Carbon\Carbon::parse($selectedDate)->isoFormat('dddd, D MMMM YYYY') }}</p>
     <p><strong>Mata Pelajaran:</strong> {{ $schedule->lesson->name }}</p>
@@ -39,6 +40,7 @@
                         <td class="border border-gray-300 px-4 py-3">{{ $student->nisn }}</td>
                         <td class="border border-gray-300 px-4 py-3">{{ $student->name }}</td>
                         <td class="border border-gray-300 px-4 py-3">
+                            <!-- Cek apakah siswa sudah diabsen, jika ada, tampilkan -->
                             <select id="attendance[{{ $student->id }}]" name="attendance[{{ $student->id }}]" class="w-full border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400" required>
                                 @php
                                     $status = $attendances[$student->id]->status ?? '';

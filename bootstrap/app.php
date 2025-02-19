@@ -12,9 +12,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->trustProxies(at: '*')
+        $middleware->trustProxies(at: '*') // Kurang aman, tapi memudahkan dev environment
         ->alias([
-            'admin' =>MustAdmin::class
+            'admin' =>MustAdmin::class // Tambahkan alias untuk wajib admin pada route
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

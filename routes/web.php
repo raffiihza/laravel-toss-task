@@ -25,19 +25,16 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    // Presensi guru
     Route::get('/attendances/teachers', [TeacherAttendanceController::class, 'index'])->name('teacherattendances.index');
     Route::get('/attendances/teachers/create', [TeacherAttendanceController::class, 'create'])->name('teacherattendances.create');
     Route::post('/attendances/teachers', [TeacherAttendanceController::class, 'store'])->name('teacherattendances.store');
 
+    // Presensi siswa
     Route::get('/attendances/students', [StudentAttendanceController::class, 'index'])->name('studentattendances.index');
     Route::get('/attendances/students/edit/{schedule}', [StudentAttendanceController::class, 'edit'])->name('studentattendances.edit');
     Route::post('/attendances/students/store/{agenda}', [StudentAttendanceController::class, 'store'])->name('studentattendances.store');
     Route::get('/attendances/students/show/{schedule}', [StudentAttendanceController::class, 'show'])->name('studentattendances.show');
-});
-
-// Untuk guru saja
-Route::middleware(['auth','guru'])->group(function () {
-    
 });
 
 // Untuk admin saja
@@ -76,6 +73,7 @@ Route::middleware(['auth','admin'])->group(function () {
     Route::delete('/teachers/{id}', [TeacherController::class, 'destroy'])->name('teachers.destroy');
     Route::post('/teachers/{id}/reset-password', [TeacherController::class, 'resetPassword'])->name('teachers.reset-password');
 
+    // Route untuk Schedule (Jadwal Pelajaran)
     Route::get('/schedules', [ScheduleController::class, 'index'])->name('schedules.index'); // Menampilkan daftar jadwal
     Route::get('/schedules/create', [ScheduleController::class, 'create'])->name('schedules.create'); // Form tambah jadwal
     Route::post('/schedules', [ScheduleController::class, 'store'])->name('schedules.store'); // Proses simpan jadwal baru

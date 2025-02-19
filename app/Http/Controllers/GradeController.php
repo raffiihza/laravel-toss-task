@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class GradeController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Menampilkan halaman index kelas
      */
     public function index()
     {
@@ -17,7 +17,7 @@ class GradeController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Menampilkan halaman membuat kelas
      */
     public function create()
     {
@@ -25,7 +25,7 @@ class GradeController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Menyimpan pembuatan kelas
      */
     public function store(Request $request)
     {
@@ -37,15 +37,7 @@ class GradeController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Grade $grade)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
+     * Menampilkan halaman edit kelas
      */
     public function edit($id)
     {
@@ -54,7 +46,7 @@ class GradeController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Menyimpan edit kelas
      */
     public function update(Request $request, $id)
     {
@@ -67,7 +59,7 @@ class GradeController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Menghapus kelas
      */
     public function destroy($id)
     {

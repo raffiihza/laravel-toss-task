@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class StudentController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Menampilkan halaman index siswa
      */
     public function index()
     {
@@ -18,16 +18,17 @@ class StudentController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Menampilkan halaman buat siswa
      */
     public function create()
     {
+        // Tampilkan semua kelas yang ada untuk dipilih
         $grades = Grade::all();
         return view('students.create', compact('grades'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Menyimpan tambah siswa
      */
     public function store(Request $request)
     {
@@ -44,25 +45,18 @@ class StudentController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Student $student)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
+     * Menampilkan halaman edit siswa
      */
     public function edit($id)
     {
         $student = Student::findOrFail($id);
+        // Ambil semua data kelas untuk dipilih
         $grades = Grade::all();
         return view('students.edit', compact('student', 'grades'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Menyimpan edit siswa
      */
     public function update(Request $request, $id)
     {
@@ -80,7 +74,7 @@ class StudentController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Menghapus data siswa
      */
     public function destroy($id)
     {

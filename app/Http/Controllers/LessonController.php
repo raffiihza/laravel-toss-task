@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class LessonController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Menampilkan halaman index mata pelajaran
      */
     public function index()
     {
@@ -17,7 +17,7 @@ class LessonController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Menampilkan halaman buat mata pelajaran
      */
     public function create()
     {
@@ -25,7 +25,7 @@ class LessonController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Menyimpan pembuatan mata pelajaran
      */
     public function store(Request $request)
     {
@@ -37,15 +37,7 @@ class LessonController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Lesson $lesson)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
+     * Menampilkan halaman edit mata pelajaran
      */
     public function edit($id)
     {
@@ -54,7 +46,7 @@ class LessonController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Menyimpan edit mata pelajaran
      */
     public function update(Request $request, $id)
     {
@@ -67,7 +59,7 @@ class LessonController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Menghapus mata pelajaran
      */
     public function destroy($id)
     {

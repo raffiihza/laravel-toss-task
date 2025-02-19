@@ -25,6 +25,7 @@
     </nav>
 </div>
 
+<!-- Logika dropdown menu admin -->
 <script>
 document.getElementById("adminDropdownBtn").addEventListener("click", function() {
     let menu = document.getElementById("admin-menu");
